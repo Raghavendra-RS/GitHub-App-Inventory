@@ -111,13 +111,155 @@ The token used with this action must have the following scopes:
 | codecov    | 22198  | user         |
 
 
+## 🐍 Standalone Python Script (Optional Local Usage)
+
+## Overview
+
+The standalone script allows local auditing without GitHub Actions. It retrieves:
+
+- Installed GitHub Apps
+- Installation targets & IDs
+- Installation timestamps
+- Installation URLs
+
+## Prerequisites
+
+Python 3.8+
+- GitHub Personal Access Token with permissions:
+  - `read:org` (read organization data)
+  - `repo` (read repository data)
+
+
+## Installation
+
+Install required packages:
+
+```bash
+pip install requests python-dotenv
+```
+
+## Configuration
+
+Create a `.env` file with your settings:
+
+```env
+GITHUB_TOKEN=ghp_xxxxx
+ORG_NAME=acme
+
+```
+
+
+### Environment Variables
+
+| Variable       | Description                                        | Default  | Example     |
+| -------------- | -------------------------------------------------- | -------- | ----------- |
+| `GITHUB_TOKEN` | GitHub Personal Access Token with `read:org` scope | Required | `ghp_xxxxx` |
+| `ORG_NAME`     | GitHub organization to audit                       | Required | `acme-inc`  |
+
+
+## Usage
+
+Run the script:
+
+```bash
+python github_app_inventory.py
+```
+
+## Output
+
+### Console Progress
+
+The script displays real-time progress:
+
+```
+🔍 Fetching installed GitHub Apps for organization: acme-inc
+📦 Retrieved 12 installations
+📄 Writing CSV -> github_apps_acme-inc_20250214_103455.csv
+✅ Inventory complete
+
+```
+
+### CSV Report: ` github_apps_[ORG]_[TIMESTAMP].csv`
+
+
+File generated:
+
+```csv
+App Name,App ID,Target Type
+dependabot,32542,organization
+sentry,11221,organization
+codecov,22198,user
+```
+
+#### CSV Columns
+
+| Column        | Description              | Values                 |
+| ------------- | ------------------------ | ---------------------- |
+| `App Name`    | GitHub App slug/name     | `dependabot`           |
+| `App ID`      | Numeric App identifier   | `32542`                |
+| `Target Type` | Installation target type | `organization`, `user` |
+
+
+## Features
+
+- ✅ Full organization-level GitHub App discovery
+- 🔍 Identifies both organization-wide and user-installed Apps
+- 📊 Exports structured CSV reports for audit & compliance
+- 🔄 Built-in pagination handling
+- 🛑 Automatic rate-limit detection + wait behavior
+- 📈 Real-time console status output
+
+
+## How It Works
+
+1. **Load configuration**: Reads token & org from environment variables
+2. **Fetch installations**: Uses GitHub REST API:
+      - GET /orgs/{org}/installations
+3. **Paginate through results**
+4. **Extract installation metadata**
+5. **Write CSV report**
+6. **Print completion status**
+
+
+## API Details
+
+### Uses GitHub REST API (v3)
+ Primary endpoint:
+```
+/orgs/{org}/installations
+```
+
+### Performance Considerations
+
+Organizations with numerous installations may:
+
+- Require multiple API pages
+- Experience short rate-limit waits
+- Produce larger CSVs
+
+
+## Use Cases
+
+- 📊 **Governance**: Visibility into external GitHub integrations
+- 🔐 **Security Review**: Validate approved vs. unauthorized Apps
+- 🧾 **Compliance**: Support SOC2 / ISO / SOX audits
+- 🧱 **IT Operations**: Manage integration footprint & lifecycle
+- 💼 **Enterprise Architecture**: Map external dependency patterns
 
 
 
+ ## Troubleshooting
 
-
-
-
-
+   ### 401 Unauthorized
+     - Token missing or expired
+     
+   ### 403 Forbidden
+    - Token lacks read:org scope
+    
+   ### Rate limit exceeded
+    - Script waits automatically — re-run if persistent
+    
+   ### Empty Results
+    - Organization may have no installed Apps or no visibility
   
 
