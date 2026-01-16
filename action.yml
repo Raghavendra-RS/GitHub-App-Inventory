@@ -1,0 +1,34 @@
+name: GitHub Apps Report
+description: Fetch all GitHub App installations for a given organization
+author: ChatGPT
+
+branding:
+  icon: package
+  color: blue
+
+inputs:
+  github_token:
+    description: GitHub token with read:org access
+    required: true
+  org_name:
+    description: Target GitHub organization name
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: pip install -r "${{ github.action_path }}/requirements.txt"
+      shell: bash
+
+    - name: Run GitHub Apps fetch script
+      run: |
+        export GITHUB_TOKEN="${{ inputs.github_token }}"
+        export ORG_NAME="${{ inputs.org_name }}"
+        python "${{ github.action_path }}/fetch_github_apps.py"
+      shell: bash
