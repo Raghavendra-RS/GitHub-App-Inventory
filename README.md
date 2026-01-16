@@ -1,6 +1,6 @@
-# GitHubApp Inventory
+# GitHub App Inventory
 
-GitHubApp Inventory automatically audits GitHub App installations across your GitHub organization and generates a downloadable CSV report. It provides visibility into installed integrations for operational governance, security review, and compliance reporting.
+GitHub App Inventory automatically audits GitHub App installations across your GitHub organization and generates a downloadable CSV report. It provides visibility into installed integrations for operational governance, security review, and compliance reporting.
 
 This project is available as:
 
@@ -29,8 +29,8 @@ Run installation audits directly from GitHub Actions—no local setup required.
 ##  Usage
 
 ```yml
-- name: GitHubApp Inventory
-  uses: org-name/githubapp-inventory@v1.0.0
+- name: GitHub App Inventory
+  uses: org-name/github-app-inventory@v1.0.0
   with:
     github_token: ${{ secrets.ORG_AUDIT_TOKEN }}
     org_name: acme
@@ -39,7 +39,7 @@ Run installation audits directly from GitHub Actions—no local setup required.
 ##  Upload Inventory Report
 - uses: actions/upload-artifact@v4
   with:
-    name: githubapp-inventory-report
+    name: github-app-inventory-report
     path: "*.csv"
 
 ```
@@ -69,8 +69,8 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - name: GitHubApp Inventory
-        uses: org-name/githubapp-inventory@v1.0.0
+      - name: GitHub App Inventory
+        uses: org-name/github-app-inventory@v1.0.0
         with:
           github_token: ${{ secrets.ORG_AUDIT_TOKEN }}
           org_name: acme
@@ -78,7 +78,7 @@ jobs:
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
-          name: githubapp-inventory-report
+          name: github-app-inventory-report
           path: "*.csv"
 
 ```
