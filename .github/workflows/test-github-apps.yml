@@ -17,7 +17,7 @@ jobs:
         uses: ./
         with:
           github_token: ${{ secrets.ORG_AUDIT_TOKEN }}
-          org_name: yubi-migration
+          org_name: Rajesh-playground
 
       - name: Upload GitHub Apps report
         uses: actions/upload-artifact@v4
