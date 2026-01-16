@@ -250,16 +250,55 @@ Organizations with numerous installations may:
 
  ## Troubleshooting
 
-   ### 401 Unauthorized
-     - Token missing or expired
-     
-   ### 403 Forbidden
+ ### 401 Unauthorized
+     - Token missing or expired  
+ ### 403 Forbidden
     - Token lacks read:org scope
-    
-   ### Rate limit exceeded
-    - Script waits automatically — re-run if persistent
-    
-   ### Empty Results
+ ### Rate limit exceeded
+    - Script waits automatically — re-run if persistent   
+ ### Empty Results
     - Organization may have no installed Apps or no visibility
-  
 
+
+## Interpreting Results
+
+### A large number of installed Apps may indicate
+
+- **High integration usage**: teams rely on many external tools to automate workflows or extend GitHub functionality
+- **Decentralized procurement**: individual teams or developers can install Apps without centralized oversight
+- **External system dependencies**: critical processes may depend on third-party services (CI/CD, security scans, analytics, etc.)
+
+### A small number of installed Apps may indicate
+
+- **Centralized security policies**: App install approvals are managed by a security or platform team
+- **Restricted integration control**: only vetted or approved tools are allowed to integrate with the organization
+
+
+## Best Practices
+
+- 🗓  **Schedule Regular Audit**: run monthly or quarterly to maintain visibility into integrations
+- 🔐 **Secure Report Storage**: treat exported data as sensitive organizational metadata
+- 🕵️ **Review App Usage & Permissions**: ensure installed Apps still serve valid and authorized purposes
+- 🗑  **Remove Stale Installations**: deauthorize Apps that are unused or no longer required
+
+
+## Limitations
+
+- **No Permission Scope Data**: App permission scopes are not currently retrieved or analyzed
+- **No Repository Access Details**: Does not identify whether Apps target all repositories or selected ones
+- **Single-Org Execution**: Only one organization can be audited per script execution
+- **Token Visibility Boundaries**: Results are limited by what the provided token is authorized to view
+- **No Enterprise Fleet Coverage**: Does not audit multiple organizations across an Enterprise account
+
+
+## Additional Resources
+
+- [GitHub REST API Documentation — GitHub Apps](https://docs.github.com/en/rest/apps/apps)
+- [GitHub Organization Security Best Practices](https://docs.github.com/en/organizations/managing-security-for-organizations/security-best-practices-for-organizations)
+- [GitHub Integration Governance Guidance](https://docs.github.com/en/enterprise-cloud@latest/admin/identity-and-access-management/third-party-application-restrictions/about-third-party-application-restrictions)
+- [GitHub Enterprise Admin Documentation](https://docs.github.com/en/enterprise-cloud@latest/admin)
+
+
+
+
+  
